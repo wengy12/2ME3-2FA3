@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\oddsidemargin 0mm
+\evensidemargin 0mm
+\textwidth 160mm
+\textheight 200mm
+
+\pagestyle {plain}
+\pagenumbering{arabic}
+
+\newcounter{stepnum}
+
+\title{Assignment 1 Solution}
+\author{author name and macid}
+\date{\today}
+
+\begin {document}
+
+\maketitle
+
+Introductory blurb.
+
+\section{Testing of the Original Program}
+
+Description of approach to testing.  Rationale for test case selection.  Summary
+of results.  Any problems uncovered through testing.
+
+Under testing you should list any assumptions you needed to make about the
+program's inputs or expected behaviour.
+
+\section{Results of Testing Partner's Code}
+
+Summary of results.
+
+\section{Discussion of Test Results}
+
+\subsection{Problems with Original Code}
+
+\subsection{Problems with Partner's Code}
+
+\section{Critique of Design Specification}
+
+%\newpage
+
+\section{Answers to Questions}
+
+\begin{enumerate}[(a)]
+
+\item answer
+
+\item answer
+
+\item ...
+
+\end{enumerate}
+
+\newpage
+
+\lstset{language=Python, basicstyle=\tiny, breaklines=true, showspaces=false,
+  showstringspaces=false, breakatwhitespace=true}
+%\lstset{language=C,linewidth=.94\textwidth,xleftmargin=1.1cm}
+
+\def\thesection{\Alph{section}}
+
+\section{Code for ReadAllocationData.py}
+
+\noindent \lstinputlisting{../src/ReadAllocationData.py}
+
+\newpage
+
+\section{Code for CalcModule.py}
+
+\noindent \lstinputlisting{../src/CalcModule.py}
+
+\newpage
+
+\section{Code for testCalc.py}
+
+\noindent \lstinputlisting{../src/testCalc.py}
+
+\newpage
+
+\section{Code for Partner's CalcModule.py}
+
+\noindent \lstinputlisting{../partner/CalcModule.py}
+
+\newpage
+
+\section{Makefile}
+
+\lstset{language=make}
+\noindent \lstinputlisting{../Makefile}
+
+\end {document}
