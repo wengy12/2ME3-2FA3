@@ -16,7 +16,7 @@
 \newcounter{stepnum}
 
 \title{Assignment 1 Solution}
-\author{author name and macid}
+\author{Yunbing Weng, 400158853}
 \date{\today}
 
 \begin {document}
@@ -27,23 +27,48 @@ Introductory blurb.
 
 \section{Testing of the Original Program}
 
-Description of approach to testing.  Rationale for test case selection.  Summary
-of results.  Any problems uncovered through testing.
-
-Under testing you should list any assumptions you needed to make about the
-program's inputs or expected behaviour.
+Sadly, I missed a lot of beggining of the year and participated in Code to win competition
+in Waterloo and also Hack Concordia so didnt have time to finish my own programm
 
 \section{Results of Testing Partner's Code}
 
-Summary of results.
+In order to test the program, I created a ordered list of 1000 strudents, 
+where each next student has a little bit less GPA, using formula:
+next students GPA = random number from 99.82% to 100% of previous student GPA
+gender and choise is also assigned randomly
+also, during initialization of the list, we count the number of students
+of each gender and sum of their GPA to get the average one.
+
+To test sort, we created clone of test list and random shuffle it
+after sorting, we should get the same list, wich is easily to check
+
+For average GPA test, we call the function for male and female and compare 
+with our generated result. We also can see that the difference is smaller then
+1E-10, wich is normal error for float
+
+For allocation we assigned capacity for each faculty as 150 and get the last student in my list
+the right of free choice, then, we just need to check that:
+1. We didnt exeeded the 150 capacity
+2. We have assigned special student somewhere
+3. In each faculty all students are sorted (because original list was sorted)
+
+Allocation didnt work on my computer because of the feature of dict
+(On my computer we cant directly use result of get() function and gives error:
+TypeError: 'NoneType' object is not subscriptable)
 
 \section{Discussion of Test Results}
+
+It would probably work in some enviroment without type restriction
 
 \subsection{Problems with Original Code}
 
 \subsection{Problems with Partner's Code}
 
+Described in above sections
+
 \section{Critique of Design Specification}
+
+It is pretty well described for me
 
 %\newpage
 
@@ -51,11 +76,18 @@ Summary of results.
 
 \begin{enumerate}[(a)]
 
-\item answer
+\item I would instead of g for gender, I would make it more general, then we can find average
+not only by gender, also by prefered faculty or by the name. Just instead of two argument, we
+would need one mor, but thats okay.
+For sort we can do something like sort in c++, so have choice to give a function with 
+ording criteria
 
 \item answer
 
-\item ...
+\item The ReadAllocationData is just program for input, and also in your requirement we can 
+use our own input file, so in this case is hard to make general test for it. Also, if I
+understand it right, to test something, we need the right answer first. Here the only thing we can 
+check is the structure of our dictionaries.
 
 \end{enumerate}
 
@@ -87,7 +119,7 @@ Summary of results.
 
 \section{Code for Partner's CalcModule.py}
 
-\noindent \lstinputlisting{../partner/CalcModule.py}
+\noindent \lstinputlisting{../src/CalcModule.py}
 
 \newpage
 
