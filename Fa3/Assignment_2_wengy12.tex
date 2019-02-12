@@ -1,0 +1,208 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\pnote}[1]{{\langle \text{#1} \rangle}}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 2}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: January 24, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 2 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~2 as two files,
+\texttt{Assignment\_2\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_2\_\emph{YourMacID}.pdf}, to the Assignment~2
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_2\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_2.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_2\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_2\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, February 3, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_2\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_2\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on February 3.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Background}
+
+Let $(S,<)$ be a strict partial order.  $(S,<)$ is \emph{dense} if,
+for all $x,y \in S$ with $x < y$, there is some $z \in S$ such that $x
+< z < y$. The strict total order $(\mathbb{Q}, <_{\rm rat})$ of the
+rationals and the strict total order $(\mathbb{R},<_{\rm real})$ of
+the real numbers are both dense.
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Let \mname{SimpleTree} be the inductive
+    set defined by the following constructors:
+
+  \be
+
+    \item $\mname{Leaf} : \mathbb{N} \rightarrow \mname{SimpleTree}$.
+
+    \item $\mname{Branch1} : \mname{SimpleTree} \rightarrow
+      \mname{SimpleTree}$.
+
+    \item $\mname{Branch2} : \mname{SimpleTree} \times
+      \mname{SimpleTree} \rightarrow \mname{SimpleTree}$.
+
+  \ee
+
+  The function $\mname{leafs} : \mname{SimpleTree} \rightarrow
+    \mathbb{N}$ is defined by pattern matching as:
+
+  \be
+
+    \item $\mname{leafs}(\mname{Leaf}(n)) = 1$.
+
+    \item $\mname{leafs}(\mname{Branch1}(t)) = \mname{leafs}(t)$.
+
+    \item $\mname{leafs}(\mname{Branch2}(t_1,t_2)) =
+      \mname{leafs}(t_1) + \mname{leafs}(t_2)$.
+
+  \ee
+
+  The function $\mname{branches} : \mname{SimpleTree} \rightarrow
+    \mathbb{N}$ is defined by pattern matching as:
+
+  \be
+
+    \item $\mname{branches}(\mname{Leaf}(n)) = 0$.
+
+    \item $\mname{branches}(\mname{Branch1}(t)) = 1 + \mname{branches}(t)$.
+
+    \item $\mname{branches}(\mname{Branch2}(t_1,t_2)) = 1 +
+      \mname{branches}(t_1) + \mname{branches}(t_2)$.
+
+  \ee
+
+  Prove that, for all $t \in \mname{SimpleTree}$, \[\mname{leafs}(t) \le
+  \mname{branches}(t) + 1.\]
+
+  \textcolor{blue}{\textbf{Yunbing Weng, 400158853, 03/02/2019}}
+
+\begin{proof}
+Let $P(t) \equiv \mname{leafs}(t) \le \mname{branches}(t) + 1$. We will proof P(t) for all $t \in \mname{SimpleTree}$ using Structural induction.
+
+\medskip
+
+\emph{Base case:} Prove $P(\mname{Leaf(n)})$
+\begin{align*}
+P(\mname{Leaf(n)}) \equiv \,& \mname{leafs(\mname{Leaf(n)})} \le \mname{branches(\mname{Leaf(n)})} + 1 &\pnote{definition of P}\\
+\equiv \, &1 \le 0 + 1 &\pnote{definition of \mname{leafs} and \mname{branches} }\\
+\equiv \, &1 \le 1 &\pnote{arithmetic}\\
+\end{align*}
+
+\emph{Induction step:}\\
+\emph{Case 1:} $t = \mname{Branch1(t1)}$. We assume t1 and prove $P(\mname{Branch1(t1)})$.
+\begin{align*}
+&P(\mname{\mname{Branch1(t1)}})\\
+&\equiv \, \mname{leafs(\mname{Branch1(t1)})} \le \mname{branches(\mname{Branch1(t1)})} + 1 &\pnote{definition of P}\\
+&\equiv \, \mname{leafs(t1)} \le 1+ \mname{branches(t1)} + 1 &\pnote{definition of \mname{leafs} and \mname{branches}}\\
+&\equiv \, \mname{branches(t1)} + 1 \le 1+ \mname{branches(t1)} + 1 &\pnote{induction hypothesis}\\
+&\equiv \, \mname{branches(t1)} + 1 \le \mname{branches(t1)} + 2 &\pnote{arithmetic}\\
+\end{align*}
+
+\emph{Case 2:} $t = \mname{Branch2(t1, t2)}$. We assume t1 and t2, and prove $P(\mname{Branch2(t1, t2)})$\\
+\begin{flalign*}
+&P(\mname{\mname{Branch2(t1, t2)}})\\
+&\equiv \mname{leafs(\mname{Branch2(t1, t2)})} \le \mname{branches(\mname{Branch2(t1, t2)})} + 1 &\pnote{definition of P}\\
+&\equiv \, \mname{leafs(t1)} + \mname{leafs(t2)} \le \mname{branches(t1)} + \mname{branches(t2)} + 2 &\pnote{definition of \mname{leafs} and  and \mname{branches}}\\
+&\equiv \, \mname{branches(t1)} + \mname{branches(t2)} + 2 \le 2 + \mname{branches(t1)} + \mname{branches(t2)} &\pnote{induction hypothesis}\\
+\end{flalign*}
+
+\end{proof}
+  \bigskip
+
+  \item \textbf{[10 points]} Let $(S,<)$ be a strict total order such
+    that there exist $a,b \in S$ with $a < b$ (i.e., $S$ has at least
+    two members).  Show that, if $(S,<)$ is dense, then $(S,<)$ is not
+    a well-order.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, 400158853, 03/02/2019}}
+
+\begin{proof}
+
+  $(S,<)$ is dence strict total order with at least two members.
+  To show that it is not well ordered, we just need to find an infinate descending sequence.
+  
+  First element will be \mname{x}(0) = $b$, then, second element will be between $a$ and $b$, because it is strict dense order,
+between any two elements must exist one more. According to the task, we have at least a and b, so we can find \mname{x}(1) between them.
+Also it should be obvious that $a$  $<$ \mname{x}(1) $< b$ = \mname{x}(0).
+
+  \mname{x}(i) will be between a and \mname{x}(i-1).
+
+\mname{x}(i) exists because of the way we built it, our first two elements exist, therefore each next will
+exist ($(S,<)$ is dence). It is also not hard to see that $a <$ \mname{x}(i) $<$ \mname{x}(i-1) 
+
+We can notice that \mname{x}(i) is infinate sequance (because it is dense). Also it doent have
+least element because each next element is less then previous. 
+
+Therefore, $(S,<)$ is not well-ordered
+
+\end{proof}
+
+\ee
+
+\end{document}
+
+

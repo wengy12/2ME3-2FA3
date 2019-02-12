@@ -1,0 +1,215 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\pnote}[1]{{\langle \text{#1} \rangle}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 3}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: February 1, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 3 consists of four problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~3 as two files,
+\texttt{Assignment\_3\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_3\_\emph{YourMacID}.pdf}, to the Assignment~3
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_3\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_3.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_3\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_3\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, February 10, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_3\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_3\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on February 10.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Background}
+
+Let $\Sigma = (\sB,\sC,\sF,\sP,\tau)$ be a finite signature of MSFOL,
+$F_{\Sigma}$ be the set of $\Sigma$-formulas, and $A \in F_{\Sigma}$.
+Recall that the members of $F_{\Sigma}$ are certain strings of
+symbols.  A \emph{subformula} of $A$ is a $B \in F_{\Sigma}$ such that
+$B$ is a substring of $A$.  For example, let $A$ be the formula $((0 =
+2) \And (3 \mid 4))$.  Then ``$(0 = 2)$'', ``$(3 \mid 4)$'', and ``$((0 = 2)
+\And (3 \mid 4))$'' are the subformulas of $A$, and ``$(0 = {}$'' and
+``$\And$'' are two substrings of $A$ that are not subformulas of $A$.
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[5 points]} Let $\mname{subformulas} : F_{\Sigma}
+    \rightarrow \mname{Set}(F_{\Sigma})$ be the function that maps a
+    formula $A \in F_{\Sigma}$ to the set of subformulas of $A$.
+    Define $\mname{subformulas}$ by recursion using pattern matching.
+
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 2/10/2019}}
+
+
+ \begin{enumerate}
+    \item  $\mname{subformulas}(t_1 = t_2) = (t_1 = t_2)$ 
+    \item  $\mname{subformulas}(p(t_1, ..., t_n)) = p(t_1, ..., t_n)$
+    \item  $\mname{subformulas}(\lnot A) = \lnot A$ $\cup$ $\mname{subformulas}(A)$
+    \item  $\mname{subformulas}(Q^*x: \alpha .A)$ = $(Q^*x: \alpha .A)$ $\cup$ $\mname{subformulas}(A) $
+    \item  $\mname{subformulas}(A \S^{**} B)$ = $A \S^{**} B$ $\cup$ $\mname{subformulas}(A)$ $\cup$ $\mname{subformulas}(B)$  
+\end{enumerate}
+
+Where
+
+*Q - any quatifier, like $\forall, \exists, etc.$
+
+**$\S$ - any logical constant, like $\lor, \land, \implies, etc.$
+    
+  
+
+  \item \textbf{[5 points]} For $A \in F_{\Sigma}$, let $a(A)$ and
+    $b(A)$ be the number of equalities and predicate applications
+    occurring in $A$, respectively.  Prove that, for all $A \in
+    F_{\Sigma}$, \[a(A) + b(A) \le \frac{|\mname{subformulas}(A)| +
+      1}{2},\] where $|S|$ denotes the size of a finite set $S$.
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 2/10/2019}}
+
+
+      
+
+  \item \textbf{[6 points]} Let $R_{\sf sf} \in F_{\Sigma} \times
+    F_{\Sigma}$ be the relation such that \[A \mathrel{R_{\sf sf}} B\]
+    iff $A$ is a subformula of $B$.  Prove that $(F_{\Sigma},R_{\sf
+      sf})$ is a weak partial order but not a weak total order.
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 2/10/2019}}
+
+  \begin{proof}
+  
+  To check this we have to check it for 3 property of week partial order and proof that totality is false
+  
+  \begin{enumerate}
+  
+  \item  \textbf{Reflexive: } $\forall A \in F_{\Sigma}.$ A $R_{\sf sf}$ A
+
+  For any formula, formula itself is a subformula, so this property holds
+
+  \item \textbf{Antisymmetric: } $\forall A, B \in F_{\Sigma}.$(A $R_{\sf sf}$ B $\land$ B $R_{\sf sf}$ A $\implies$ A=B)
+
+For any formula, subformula is an subset of symbols of formula, and for subset we have proved that $A \subseteq B \land B \subseteq A \iff A=B$
+
+$\implies$ property holds
+
+  \item \textbf{Transitive: } $\forall A, B, C \in F_{\Sigma}.$(A $R_{\sf sf}$ B $\land$ B $R_{\sf sf}$ C $\implies$ A $R_{\sf sf}$ C)
+
+It is not hard to guess that we will use property of subformulas again and I think that it is pretty obvious that subset of a subset is still a subset
+
+  \item \textbf{$\lnot$ Total: } $\exists A, B \in F_{\Sigma}$. $\lnot(A R_{\sf sf} B) \land \lnot(B R_{\sf sf} A)$
+
+Let A = $(0 = 1)$ and B = $(0 < 1)$, this is good enough example I think
+
+  \end{enumerate}
+  
+  
+  
+  \end{proof}
+
+  \item \textbf{[4 points]} Let $A$ be any member of $F_{\Sigma}$ and
+    $G = \mname{subformulas}(A)$.
+
+  \be
+
+    \item What are maximal elements of $G$ in $(F_{\Sigma},R_{\sf
+        sf})$?
+
+    \item What are minimal elements of $G$ in $(F_{\Sigma},R_{\sf
+        sf})$?
+
+    \item Does $G$ have a maximum element in $(F_{\Sigma},R_{\sf sf})$?  If
+        so, what is it?
+
+    \item Does $G$ have a minimum element in $(F_{\Sigma},R_{\sf
+        sf})$?  If so, what is it?
+
+  \ee
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 2/10/2019}}
+
+\begin{enumerate}
+
+\item Maximal: A is an $R_{sf}-maximal$ element of $G \subseteq F_\Sigma$ if $A \in G$ and $\forall B \in F_\Sigma. B \in G \implies \lnot ($A$ R_{sf} $B$ )$
+
+\item Minimal: A is an $R_{sf}-maximal$ element of $G \subseteq F_\Sigma$ if $A \in G$ and $\forall B \in F_\Sigma. B \in G \implies \lnot ($B$ R_{sf} $A$ )$
+
+\item Maximum: A is the maximum element of G as all substrings are eather equal A or less then A.
+
+\item Minimum: G does not have a minimum element as for example A = $(0 = 1) \lor (0 < 1)$ can be breaked down to itself, or $(0 = 1)$ or $(0 < 1)$, last two elements are unbreakeble and also neather of them is subset of other one. 
+
+\end{enumerate}
+
+\ee
+
+\end{document}
+
+
