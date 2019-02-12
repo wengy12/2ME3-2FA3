@@ -9,7 +9,7 @@ class SeqADT:
     def __init__(self, s):
         self.s = s
         self.i = 0
-        return self
+        #return self
 
     def start(self):
         self.i = 0

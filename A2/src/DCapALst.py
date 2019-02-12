@@ -6,16 +6,16 @@
 from StdntAllocTypes import *
 
 
-class DCapALst:
+class dCapALst:
 
-    def __init__(self):
+    def init(self):
         self.s = set()
 
     def add(self, d, n):
         for i in self.s:
             if i[0] == d:
                 raise KeyError
-        self.s.add(d, n)
+        self.s.add((d, n))
 
     def remove(self, d):
         n = len(self.s)
@@ -36,3 +36,5 @@ class DCapALst:
             if i[0] == d:
                 return i[1]
         raise KeyError
+
+DCapALst = dCapALst()
