@@ -113,7 +113,7 @@ N/A
 
 \subsubsection* {Exported Types}
 
-\wss{What should be written here?}
+Stack = ?
 
 \subsubsection* {Exported Constants}
 
@@ -143,7 +143,7 @@ toSeq& & seq of T & \\
 
 \subsubsection* {State Variables}
 
-$S$: \wss{What is the type of the state variable?}
+$S$: seq of T
 
 \subsubsection* {State Invariant}
 
@@ -181,9 +181,9 @@ new Stack($s$):
 
 \noindent pop():
 \begin{itemize}
-\item output: \wss{What should go here?}
+\item output:  $out := \text{new Stack}(S - S[|S| - 1])$
 
-\item exception: \wss{What should go here?}
+\item exception: $exc := (|S| = 0 \implies out\_of\_range)$
 
 \end{itemize}
 
@@ -191,13 +191,14 @@ new Stack($s$):
 \begin{itemize}
 \item output: $\mathit{out} := S[|S| - 1]$
 
-\item exception: \wss{What should go here?}
+\item exception:  $exc := (|S| = 0 \implies out\_of\_range)$
+
 
 \end{itemize}
 
 \noindent size():
 \begin{itemize}
-\item output: \wss{What should go here?}
+\item output: $out := |S|$
 \item exception: None
 \end{itemize}
 
@@ -214,7 +215,7 @@ new Stack($s$):
 
 \subsection* {Template Module}
 
-CardStackT is \wss{What should go here?}
+CardStackT is Stack($\mathbb{Z}$)
 
 \newpage
 
@@ -277,9 +278,9 @@ $W$: CardStackT \textit{\# Waste}\\
 
 \subsubsection* {State Invariant}
 
-$|T| = \wss{\text{What goes here?}}$\\
-$|F| = \wss{\text{What goes here?}}$\\
-cnt\_cards($T$, $F$, $D$, $W$, \wss{\text{What goes here?}}) = TOTAL\_CARDS\\
+$|T| =  x  : \mathbb{Z}$ $|$ $  0 \leq x \leq 16$\\
+$|F| =  x  : \mathbb{Z}$ $|$ $  0 \leq x \leq 13$\\
+cnt\_cards($T$, $F$, $D$, $W$, f) = TOTAL\_CARDS\\
 two\_decks($T$, $F$, $D$, $W$) \textit{\# each card appears twice in the combined deck}
 
 \subsubsection* {Assumptions \& Design Decisions}
@@ -341,9 +342,9 @@ $c = \mbox{Tableau}$ & valid\_tab\_tab($n_0$,$n_1$) \\
 \hhline{|-|-|}
 $c = \mbox{Foundation}$ & valid\_tab\_foundation($n_0$,$n_1$) \\
 \hhline{|-|-|}
-$c = \mbox{Deck}$& \wss{What goes here?}\\
+$c = \mbox{Deck}$& False\\
 \hhline{|-|-|}
-$c = \mbox{Waste}$ & \wss{What goes here?}\\
+$c = \mbox{Waste}$ & False\\
 \hhline{|-|-|}
 \end{tabular}
 
@@ -374,9 +375,9 @@ $c = \mbox{Tableau}$ & valid\_waste\_tab($n$) \\
 \hhline{|-|-|}
 $c = \mbox{Foundation}$ & valid\_waste\_foundation($n$) \\
 \hhline{|-|-|}
-$c = \mbox{Deck}$& \wss{What goes here?}\\
+$c = \mbox{Deck}$& False\\
 \hhline{|-|-|}
-$c = \mbox{Waste}$ & \wss{What goes here?}\\
+$c = \mbox{Waste}$ & False\\
 \hhline{|-|-|}
 \end{tabular}
 
@@ -397,8 +398,22 @@ $c = \mbox{Waste}$ & \wss{What goes here?}\\
 
 \noindent is\_valid\_deck\_mv():
 \begin{itemize}
-\item output: \wss{What goes here?  The deck moves involves moving a card from
-    the deck stack to the waste stack.}
+\item output: 
+
+\begin{tabular}{|p{3cm}|l|}
+\hhline{~|-|}
+\multicolumn{1}{r|}{} & \multicolumn{1}{l|}{$out :=$}\\
+\hhline{|-|-|}
+$c = \mbox{Tableau}$ & False \\
+\hhline{|-|-|}
+$c = \mbox{Foundation}$ & False \\
+\hhline{|-|-|}
+$c = \mbox{Deck}$& False\\
+\hhline{|-|-|}
+$c = \mbox{Waste}$ & is\_Deck\_empty()\\
+\hhline{|-|-|}
+\end{tabular}
+
 \item exception: None
 \end{itemize}
 
@@ -408,9 +423,9 @@ $c = \mbox{Waste}$ & \wss{What goes here?}\\
 
 \begin{tabular}{|p{3cm}|l|}
 \hhline{|-|-|}
-$c = \mbox{Tableau}$ & T[$n_0$], T[$n_1$] := \wss{What goes here?}\\
+$c = \mbox{Tableau}$ & T[$n_0$], T[$n_1$] := T[$n_0$].pop(), T[$n_1$].push(T[$n_0$].top())\\
 \hhline{|-|-|}
-$c = \mbox{Foundation}$ & T[$n_0$], F[$n_1$] := \wss{What goes here?}\\
+$c = \mbox{Foundation}$ & T[$n_0$], F[$n_1$] := T[$n_0$].pop(), F[$n_1$].push(T[$n_0$].top())\\
 \hhline{|-|-|}
 \end{tabular}
 
@@ -425,9 +440,9 @@ $c = \mbox{Foundation}$ & T[$n_0$], F[$n_1$] := \wss{What goes here?}\\
 
 \begin{tabular}{|p{3cm}|l|}
 \hhline{|-|-|}
-$c = \mbox{Tableau}$ & W, T[$n$] := \wss{What goes here?}\\
+$c = \mbox{Tableau}$ & W, T[$n$] := W.pop(), T[$n$].push(W.top())\\
 \hhline{|-|-|}
-$c = \mbox{Foundation}$ & W, F[$n$] := \wss{What goes here?}\\
+$c = \mbox{Foundation}$ & W, F[$n$] := W.pop(), F[$n$].push(W.top())\\
 \hhline{|-|-|}
 \end{tabular}
 
@@ -439,7 +454,7 @@ $c = \mbox{Foundation}$ & W, F[$n$] := \wss{What goes here?}\\
 
 \noindent deck\_mv():
 \begin{itemize}
-\item transition: D, W := \wss{What goes here?}
+\item transition: D, W := D.pop(), W.push(D.top())
 \item exception:
   $exc := (\neg \text{is\_valid\_deck\_mv}() \Rightarrow \text{invalid\_argument})$
 \end{itemize}
@@ -474,18 +489,18 @@ $c = \mbox{Foundation}$ & W, F[$n$] := \wss{What goes here?}\\
   \text{is\_valid\_deck\_mv()}$ where\\
 
   $\text{valid\_tab\_mv} \equiv (\exists c: \text{CategoryT}, n_0: \mathbb{N},
-  n_1: \mathbb{N} | \wss{\text{What goes here?}}: \text{is\_valid\_tab\_mv}(c, n_0, n_1))$\\
+  n_1: \mathbb{N} | ((c = Foundation$ $ or$ $ c = Tableau)$ $ and $ $  n_0 \in [0..7]$ $ and$ $ n_1 \in [0..7]): \text{is\_valid\_tab\_mv}(c, n_0, n_1))$\\
 
   $\text{valid\_waste\_mv} \equiv (\exists c: \text{CategoryT}, n: \mathbb{N} |
-  \wss{\text{What goes here?}} : \text{is\_valid\_waste\_mv}(c, n))$
+ ((c = Foundation$ $ or$ $ c = Tableau)$ $ and $ $  n_0 \in [0..7]$ $ and$ $ n_1 \in [0..7]) : \text{is\_valid\_waste\_mv}(c, n))$
 
 \item exception: None
 
 \end{itemize}
 
-\noindent is\_win\_state():
+\noindent is\_win\_state(): 
 \begin{itemize}
-\item output: \wss{What goes here?}
+\item output: $True \implies \forall x: \mathbb{N} | x \in [0..7] |$F[x].size() = 13
 \item exception: None
 
 \end{itemize}
@@ -539,19 +554,30 @@ $(\forall i: \mathbb{N} | i \in [0..9] : T[i].\text{toSeq}() =
 
 \begin{tabular}{|p{4cm}|p{3.5cm}|l|}
 \hhline{|-|-|-|}
-$T[n_0].\text{size}() > 0$ & T[$n_1$].size() $>$ 0 & \wss{What goes here?}\\
+$T[n_0].\text{size}() > 0$ & T[$n_1$].size() $>$ 0 & tab\_placeable(T[n0].top(), T[n1].top())\\
 \hhline{|~|-|-|}
- & T[$n_1$].size() = 0 & \wss{What goes here?}\\
+ & T[$n_1$].size() = 0 & True\\
 \hhline{|-|-|-|}
-T[$n_0$].size() = 0 & T[$n_1$].size() $>$ 0 & \wss{What goes here?}\\
+T[$n_0$].size() = 0 & T[$n_1$].size() $>$ 0 & False\\
 \hhline{|~|-|-|}
-& T[$n_1$].size() $=$ 0 & \wss{What goes here?}\\
+& T[$n_1$].size() $=$ 0 & False\\
 \hhline{|-|-|-|}
 \end{tabular}\\\\
 
 \noindent valid\_tab\_foundation: $\mathbb{N} \times \mathbb{N} \rightarrow \mathbb{B}$\\
-\noindent valid\_tab\_foundation($n_0, n_1$) $\equiv$ \wss{What goes here?  You
-  may need a table?}\\
+\noindent valid\_tab\_foundation($n_0, n_1$) $\equiv$ 
+
+\begin{tabular}{|p{4cm}|p{3.5cm}|l|}
+\hhline{|-|-|-|}
+$T[n_0].\text{size}() > 0$ & T[$n_1$].size() $>$ 0 & foundation\_placeable(T[n0].top(), F[n1].top())\\
+\hhline{|~|-|-|}
+ & T[$n_1$].size() = 0 & T[$n_0$].top().r == 1\\
+\hhline{|-|-|-|}
+T[$n_0$].size() = 0 & T[$n_1$].size() $>$ 0 & False\\
+\hhline{|~|-|-|}
+& T[$n_1$].size() $=$ 0 & False\\
+\hhline{|-|-|-|}
+\end{tabular}\\\\
 
 \noindent valid\_waste\_tab: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent valid\_waste\_tab ($n$) $\equiv$
@@ -575,15 +601,36 @@ F[$n$].size() = 0 & W.top().r = ACE\\
 \hhline{|-|-|}
 \end{tabular}\\\\
 
-\noindent tab\_placeable: \wss{Complete this specification}\\
+\noindent tab\_placeable: $CardT \times CardT \rightarrow \mathbb{B}$
+\noindent $tab\_placeable (c_0, c_1) \equiv$
 
-\noindent foundation\_placeable: \wss{Complete this specification}
+\begin{tabular}{|p{4cm}|p{3.5cm}|l|}
+\hhline{|-|-|-|}
+$c_0.s = c_1.s$ & $c_1.r = c_0.r + 1$ & True\\
+\hhline{|~|-|-|}
+ & $c_1.r \neq c_0.r + 1$ & False\\
+\hhline{|-|-|-|}
+$c_0.s \neq c_1.s$ & False\\
+\hhline{|-|-|}
+\end{tabular}\\\\
+
+\noindent foundation\_placeable: $CardT \times CardT \rightarrow \mathbb{B}$
+\noindent $foundation\_placeable (c_0, c_1) \equiv$
+
+\begin{tabular}{|p{4cm}|p{3.5cm}|l|}
+\hhline{|-|-|-|}
+$c_0.s = c_1.s$ & $c_0.r = c_1.r + 1$ & True\\
+\hhline{|~|-|-|}
+ & $c_0.r \neq c_1.r + 1$ & False\\
+\hhline{|-|-|-|}
+$c_0.s \neq c_1.s$ & False\\
+\hhline{|-|-|}
+\end{tabular}\\\\
 
 \newpage
 
 \section*{Critique of Design}
 
-\wss{Write a critique of the interface for the modules in this project.  Is there
-anything missing?  Is there anything you would consider changing?  Why?}\\
+Dont really have some suggestion for this.
 
 \end {document}
