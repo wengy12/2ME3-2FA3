@@ -79,3 +79,7 @@ clean:
 	@- $(RM) $(test_OBJS)
 	@- $(RM) $(OBJS)
 	@- $(RM) $(DEP)
+
+
+doc:
+	doxygen doxConfig
