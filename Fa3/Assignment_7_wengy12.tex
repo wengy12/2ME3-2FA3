@@ -1,0 +1,196 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage{diagbox}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 7}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: March 12, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 7 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~7 as two files,
+\texttt{Assignment\_7\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_7\_\emph{YourMacID}.pdf}, to the Assignment~7
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_7\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_7.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_7\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_7\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, March 17, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_7\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_7\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on March 17.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Let $\Sigma$ be the set of lower and
+    uppercase letters in the Roman alphabet plus the set
+    $\set{[,],\_,.}$ of special symbols.  Let a \emph{word} be a
+    nonempty string of lower case letters in $\Sigma$, a
+    \emph{capitalized word} be an uppercase letter in $\Sigma$ or an
+    upper case letter in $\Sigma$ followed by a word, a
+    \emph{parenthesized word} be a string of the form $[x]$ where $x$
+    is a word or capitalized word, and a \emph{sentence} be a string
+    of the form $x.$ or $x\_y.$ (note the occurrences of ``.'') where
+    $x$ is a capitalized word, and $y$ is a nonempty string of words,
+    capitalized words, and parenthesized words separated by the symbol
+    ``\_''.  Write a regular expression that matches the set of
+    sentences (as defined here).
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/17/2019}}
+
+  $set_{of}sentences = ((CapWord)(\_(Word+CapWord+ParWord))^*.)^*$
+
+  \bigskip
+
+  \item \textbf{[10 points]} Construct an NFA (possibly with
+    $\epsilon$-transitions) that is equivalent to the regular
+    expression \[0(00 + 1^*)^*1.\] Present the NFA as both a
+    transition table (with a column for $\epsilon$ transitions) and a
+    transition diagram.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/17/2019}}
+
+\begin{center}
+\begin{tabular}{r|l|lll|}
+\cline{2-5}
+& {\diagbox{$Q$}{$\Sigma$}} & $0$ & $1$ & $\epsilon$\\
+\cline{2-5}
+start $\rightarrow$ & $p_0$ & $p_1$ & $$& $$\\
+                                & $p_1$ & $$ & $$& $p_2,p_9$\\
+                                & $p_2$ & $$ & $$& $p_3,p_6,p_8$\\
+                                & $p_3$ & $p_4$ & $$& $$\\
+                                & $p_4$ & $p_5$ & $$& $$\\
+                                & $p_5$ & $$ & $$& $p_8$\\
+                                & $p_6$ & $$ & $p_7$& $$\\
+                                & $p_7$ & $$ & $$& $p_6,p_8$\\
+                                & $p_8$ & $$ & $$& $p_2,p_9$\\
+                                & $p_9$ & $$ & $p_{10}$& $$\\
+final $\rightarrow$  & $p_{10}$ & $$   & $$ & $$\\
+\cline{2-5}
+\end{tabular}
+\end{center}
+
+
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   \node[state, initial, thick] (p_0)   {$p_0$}; 
+   \node[state, thick] (p_1) [right=of p_0] {$p_1$}; 
+   \node[state, thick] (p_2) [right=of p_1] {$p_2$};
+   \node[state, thick] (p_6) [right=of p_2] {$p_6$};
+   \node[state, thick] (p_3) [below=of p_6]  {$p_3$};
+   \node[state, thick] (p_4) [right=of p_3] {$p_4$};
+   \node[state, thick] (p_5) [right=of p_4] {$p_5$};
+   \node[state, thick] (p_7) [right=of p_6] {$p_7$};
+   \node[state, thick] (p_8) [right=of p_7] {$p_8$};
+   \node[state, thick] (p_9) [right=of p_8] {$p_9$};
+   \node[state, thick, accepting] (p_10) [right=of p_9] {$p_{10}$};
+    \path[->, thick, >=stealth] 
+   (p_0) edge [right,above] node {0} (p_1)
+   (p_1) edge [right,above] node {$\epsilon$} (p_2)
+             edge [bend left,above] node {$\epsilon$} (p_9)
+   (p_2) edge [right, above] node {$\epsilon$} (p_6)
+             edge [right,above] node {$\epsilon$} (p_3)
+             edge [bend left,above] node {$\epsilon$} (p_8)
+   (p_3) edge [right,above] node {0} (p_4)
+   (p_4) edge [right,above] node {0} (p_5)
+   (p_5) edge [right,right] node  {$\epsilon$} (p_8)
+   (p_6) edge [right,above] node {1} (p_7)
+   (p_7) edge [right,above] node {$\epsilon$} (p_8)
+             edge [bend left, below] node {$\epsilon$} (p_6)
+   (p_8) edge [right,above] node {$\epsilon$} (p_9)
+             edge [bend left, below] node {$\epsilon$} (p_2)
+   (p_9) edge [right,above] node {1} (p_10)
+;
+
+\end{tikzpicture}
+
+\ee
+
+\end{document}
+
+

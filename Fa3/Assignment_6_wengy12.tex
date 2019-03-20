@@ -1,0 +1,231 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage{diagbox}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 6}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: March 5, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 6 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~6 as two files,
+\texttt{Assignment\_6\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_6\_\emph{YourMacID}.pdf}, to the Assignment~6
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_6\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_6.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_6\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_6\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, March 10, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_6\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_6\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on March 10.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Construct an NFA $N$ for the alphabet
+    $\Sigma = \set{0,1}$ such that $L(N)$ is the set of all strings $x
+    \in \Sigma^*$ such that there are two 0s in $x$ separated by a
+    string of length $3k$ for $k \ge 0$.  Present $N$ as both a
+    transition table and a transition diagram.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/10/2019}}
+
+\begin{center}
+\begin{tabular}{r|l|ll|}
+\cline{2-4}
+& {\diagbox{$Q$}{$\Sigma$}} & $0$ & $1$\\
+\cline{2-4}
+start $\rightarrow$ & $q_0$ & $\set{q_1}$ & $\set{q_0}$\\
+                    & $q_1$ & $\set{q_2,q_4}$   & $\set{q_2}$\\
+                    & $q_2$ & $\set{q_3}$   & $\set{q_3}$\\
+                    & $q_3$ & $\set{q_1}$   & $\set{q_1}$\\
+final $\rightarrow$ & $q_4$ & $\set{q_1,q_4}$    & $\set{q_0,q_4}$\\
+\cline{2-4}
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto] 
+   \node[state, initial, thick] (q_0)   {$q_0$}; 
+   \node[state, thick] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state, thick] (q_2) [below=of q_1] {$q_2$}; 
+   \node[state, thick] (q_3) [right=of q_2] {$q_3$};
+   \node[state, thick, accepting] (q_4) [right=of q_1] {$q_4$};
+    \path[->, thick, >=stealth] 
+    (q_0) edge [loop, above] node {1} (q_0)
+              edge [right, above] node {0} (q_1)
+    (q_1) edge [right, above] node {0} (q_4)
+              edge [bend right, left] node {0,1} (q_2)
+    (q_2) edge [bend right, below] node {0,1} (q_3) 
+    (q_3) edge [bend right, above] node {0,1} (q_1)
+    (q_4) edge [loop, above] node {0,1} (q_4)
+              edge [bend right, above] node {0} (q_1)
+              edge [bend right, above] node {1} (q_0)
+;
+\end{tikzpicture}
+\end{center}
+
+  \bigskip
+
+  \item \textbf{[10 points]} Construct a DFA $M$ with no inaccessible
+    states that is equivalent to the NFA defined by the following
+    transition table:
+
+\begin{center}
+\begin{tabular}{r|l|ll|}
+\cline{2-4}
+& {\diagbox{$Q$}{$\Sigma$}} & $0$ & $1$\\
+\cline{2-4}
+start $\rightarrow$ & $p$ & $\set{q,r}$ & $\set{r}$\\
+                    & $q$ & $\set{r,s}$   & $\set{r}$\\
+                    & $r$ & $\set{p}$   & $\set{s}$\\
+final $\rightarrow$ & $s$ & $\set{}$    & $\set{s}$\\
+\cline{2-4}
+\end{tabular}
+\end{center}
+
+  Present $M$ as both a transition table and a transition diagram.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/10/2019}}
+
+\begin{center}
+\begin{tabular}{r|l|ll|}
+\cline{2-4}
+& {\diagbox{$Q$}{$\Sigma$}} & $0$ & $1$\\
+\cline{2-4}
+start $\rightarrow$ & $p$ & $qr$ & $r$\\
+                                & $r$ & $p$   & $s$\\
+                                & $qr$ & $prs$   & $rs$\\
+final $\rightarrow$  & $rs$ & $p$   & $s$\\
+final $\rightarrow$  & $s$ & $limbo$   & $s$\\
+final $\rightarrow$  & $prs$ & $pqr$   & $rs$\\
+                                & $pqr$ & $pqrs$   & $rs$\\
+final $\rightarrow$  & $pqrs$ & $pqrs$   & $rs$\\
+\cline{2-4}
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto] 
+   \node[state, initial, thick] (p)   {$p$}; 
+   \node[state, thick] (qr) [right=of p] {$qr$}; 
+   \node[state, thick] (r) [below=of p] {$r$}; 
+   \node[state, thick, accepting] (rs) [right=of qr] {$rs$};
+   \node[state, thick, accepting] (s) [below=of rs] {$s$};
+   \node[state, thick] (limbo) [below=of s] {$limbo$};
+   \node[state, thick, accepting] (prs) [right=of rs] {$prs$};
+   \node[state, thick] (pqr) [right=of s] {$pqr$};
+   \node[state, thick, accepting] (pqrs) [right=of limbo] {$pqrs$};
+    \path[->, thick, >=stealth] 
+   (p) edge [right, above] node {0} (qr)
+         edge [bend right, left] node {1} (r)
+   (r) edge [right, above] node {1} (s)
+         edge [bend right, right] node {0} (p)
+   (qr) edge[right, above] node {1} (rs)
+          edge [bend left, above] node {0} (prs)
+   (rs) edge [left, left] node {1} (s)
+          edge [bend left, below] node {0} (p)
+   (prs) edge [left, above] node {1} (rs)
+           edge [left, right] node {0} (pqr)
+   (pqr) edge [right, above] node {1} (rs)
+           edge [left, right] node {0} (pqrs)
+   (pqrs) edge [left, right] node {1} (rs)
+            edge [loop below, below] node {0} (pqrs)
+   (s) edge [loop below, below] node {1} (s)
+        edge [bend left, right] node {0} (limbo)
+   (limbo) edge [loop below, below] node {0,1} (limbo)
+;
+\end{tikzpicture}
+\end{center}
+
+\ee
+
+\end{document}
+
+
