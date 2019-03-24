@@ -16,7 +16,13 @@
 #include "Stack.h"
 
 int main() {
-  std::cout << "'make experiment' will run this main" << std::endl;
+
+  /*vector<CardT> v;
+  v.push_back(CardT(Heart, 5));
+  Stack <CardT> s(v);
+  s = s.push(CardT(Heart, 6));
+  std::cout << s.top().s << " " << s.size() << endl;
+  std::cout << "'make experiment' will run this main" << std::endl;*/
 
   // When you are finished your implementation, uncomment the code
   // below and make sure 'make experiment' compiles and runs.
