@@ -15,31 +15,34 @@
 #include "GameBoard.h"
 #include "Stack.h"
 
+#define GameBoard BoardT
+
 int main() {
 
-  /*vector<CardT> v;
+  vector<CardT> v;
   v.push_back(CardT(Heart, 5));
   Stack <CardT> s(v);
   s = s.push(CardT(Heart, 6));
   std::cout << s.top().s << " " << s.size() << endl;
-  std::cout << "'make experiment' will run this main" << std::endl;*/
+  std::cout << "'make experiment' will run this main" << std::endl;
 
   // When you are finished your implementation, uncomment the code
   // below and make sure 'make experiment' compiles and runs.
   // This will ensure that your interface has the correct syntax and will be
   // compatible with our unit tests that we will run for grading.
 
-  /*
+  
   // Produce a new deck (consisting of two standard decks) and shuffle its
   // cards.
   std::vector<CardT> d;
   for (RankT rank = ACE; rank <= KING; rank++) {
     for (unsigned int suit = 0; suit < 4; suit++) {
-      CardT n = { static_cast<SuitT>(suit), rank };
+      CardT n(static_cast<SuitT>(suit), rank);
       d.push_back(n);
       d.push_back(n);
     }
   }
+  std::cout << "good" << endl;
   std::random_shuffle(d.begin(), d.end());
 
   GameBoard board(d);
@@ -74,7 +77,7 @@ int main() {
   CardT bar = foo.top();
   std::cout << "Card: " << bar.s << " " << bar.r << std::endl;
   foo = foo.pop();
-  */
+  
 
   return 0;
 }
