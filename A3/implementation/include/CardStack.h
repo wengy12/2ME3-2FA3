@@ -1,7 +1,7 @@
 /**
- * \file CardTypes.h
+ * \file CardStack.h
  * \author wengy12
- * \brief Card types
+ * \brief stack of cards
  */
 #ifndef A3_CARD_STACK_H_
 #define A3_CARD_STACK_H_
