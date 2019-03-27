@@ -21,9 +21,9 @@ TEST_CASE( "random_test, plays the game for you" , "[BoardT]" ) {
     }
     srand(time(0));
     random_shuffle(d.begin(), d.end());
-    for (int i = 0; i < 20; i++){
-        cout << d[i].s << " " << d[i].r << endl;
-    }
+    //for (int i = 0; i < 20; i++){
+    //    cout << d[i].s << " " << d[i].r << endl;
+    //}
     GameBoard board(d);
     SECTION("best AI"){
         string last_mv = "0000";
@@ -85,5 +85,63 @@ TEST_CASE( "random_test, plays the game for you" , "[BoardT]" ) {
                 cout << board.get_foundation(i).top().s << " " << board.get_foundation(i).top().r << endl;
             }
         }
+    }
+    SECTION("AI plays untill it wins!"){
+        int count = 0;
+        while(!board.is_win_state()){
+            count++;
+            srand(time(0));
+            random_shuffle(d.begin(), d.end());
+            board = GameBoard(d);
+            string last_mv = "0000";
+            int TT_count = 0;
+            bool sad = false;
+            while (!board.is_win_state() && board.valid_mv_exists() && !sad){
+                sad = true;
+                for (int j = 0; j < 10; j++){
+                    for (int i = 0; i < 8; i++){
+                        if (board.get_waste().size() != 0 && board.is_valid_waste_mv(Foundation, i)){
+                            //cerr << "W F " << i << " " << board.get_waste().top().s << " " << board.get_waste().top().r << endl;
+                            board.waste_mv(Foundation, i);
+                            sad = false;
+                            last_mv = "WF"+to_string(i);
+                            TT_count = 0;
+                        }
+                        if (board.is_valid_tab_mv(Foundation, j, i)){
+                            board.tab_mv(Foundation, j, i);
+                            //cerr << "T " << j << " F " << i << " " << board.get_foundation(i).top().s << " " << board.get_foundation(i).top().r << endl;;;
+                            sad = false;
+                            last_mv = "T"+to_string(j)+"F"+to_string(i);
+                            TT_count = 0;
+                        }
+                    }
+                    for (int i = 0; i < 10; i++){
+                        if (i == j) continue;
+                        if (board.get_waste().size() != 0 && board.is_valid_waste_mv(Tableau, i)){
+                            //cerr << "W T " << i << " " << board.get_waste().top().s << " " << board.get_waste().top().r << endl;
+                            board.waste_mv(Tableau, i);
+                            sad = false;
+                            last_mv = "WT"+to_string(i);
+                            TT_count = 0;
+                        }
+                        if (TT_count != 100 && last_mv != "T"+to_string(j)+"T"+to_string(i) && board.is_valid_tab_mv(Tableau, i, j) && board.get_tab(j).size() != 0){
+                            board.tab_mv(Tableau, i, j);
+                            //cerr << "T " << i << " T " << j << " " << board.get_tab(j).top().s << " " <<  board.get_tab(j).top().r << endl;
+                            sad = false;
+                            last_mv = "T"+to_string(i)+"T"+to_string(j);
+                            TT_count++;
+                        }
+                    }
+                }
+                if (sad && board.is_valid_deck_mv()){
+                    board.deck_mv();
+                    sad = false;
+                    TT_count = 0;
+                    //cerr << "D " << board.get_waste().top().s << " " << board.get_waste().top().r << endl;
+                }
+            }
+            cout << count << " ";
+        }
+        cout << count;
     }
 }
