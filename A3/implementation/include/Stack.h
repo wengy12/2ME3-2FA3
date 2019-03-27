@@ -6,6 +6,8 @@
 
 #ifndef A3_STACK_H_
 #define A3_STACK_H_
+#include <utility>
+#include <stdexcept>
 
 using namespace std;
 

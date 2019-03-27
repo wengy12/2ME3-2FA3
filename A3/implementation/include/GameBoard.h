@@ -13,6 +13,7 @@
 
 #include <functional>
 #include <utility>
+#include <stdexcept>
 
 /**
  * \brief BoardT headler
