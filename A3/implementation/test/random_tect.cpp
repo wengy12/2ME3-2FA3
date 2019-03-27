@@ -23,7 +23,7 @@ TEST_CASE( "random_test, plays the game for you" , "[BoardT]" ) {
     random_shuffle(d.begin(), d.end());
     //for (int i = 0; i < 20; i++){
     //    cout << d[i].s << " " << d[i].r << endl;
-    //}
+    //} 
     GameBoard board(d);
     SECTION("best AI"){
         string last_mv = "0000";
