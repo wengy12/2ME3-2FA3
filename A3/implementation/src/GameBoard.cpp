@@ -100,13 +100,16 @@ bool B::valid_tab_foundation(int x, int y){
     if (T[x].size() == 0){
         return false;
     }
-    if (T[y].size() == 0){
+    if (F[y].size() == 0){
         return T[x].top().r == ACE;
     }
     return foundation_placeable(T[x].top(), F[y].top());
 }
 
 bool B::valid_waste_tab(int x){
+    if (W.size() == 0){
+        return false;
+    }
     if (T[x].size() == 0){
         return true;
     }
@@ -114,8 +117,11 @@ bool B::valid_waste_tab(int x){
 }
 
 bool B::valid_waste_foundation(int x){
+    if (W.size() == 0){
+        return false;
+    }
     if (F[x].size() == 0){
-        return true;
+        return W.top().r == ACE;
     }
     return foundation_placeable(W.top(), F[x].top());
 }
@@ -180,12 +186,12 @@ void B::tab_mv(C c, int x, int y){
         throw invalid_argument("tab_mv");
     }
     if (c == Tableau){
-        T[y].push(T[x].top());
-        T[x].pop();
+        T[y] = T[y].push(T[x].top());
+        T[x] = T[x].pop();
     }
     if (c == Foundation){
-        F[y].push(T[x].top());
-        T[x].pop();
+        F[y] = F[y].push(T[x].top());
+        T[x] = T[x].pop();
     }
 }
 
@@ -194,12 +200,12 @@ void B::waste_mv(C c, int x){
         throw invalid_argument("waste_mv");
     }
     if (c == Tableau){
-        T[x].push(W.top());
-        W.pop();
+        T[x] = T[x].push(W.top());
+        W = W.pop();
     }
     if (c == Foundation){
-        F[x].push(W.top());
-        W.pop();
+        F[x] = F[x].push(W.top());
+        W = W.pop();
     }
 }
 
@@ -207,8 +213,8 @@ void B::deck_mv(){
     if (!is_valid_deck_mv()){
         throw invalid_argument("deck_mv");
     }
-    W.push(D.top());
-    D.pop();
+    W = W.push(D.top());
+    D = D.pop();
 }
 
 CS B::get_tab(int n){
