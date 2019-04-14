@@ -1,0 +1,198 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage{diagbox}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 8}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: March 17, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 8 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~8 as two files,
+\texttt{Assignment\_8\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_8\_\emph{YourMacID}.pdf}, to the Assignment~8
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_8\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_8.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_8\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_8\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, March 24, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_8\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_8\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on March 24.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Construct a regular grammar that
+    generates the language matched by the regular expression $0(00 +
+    11)^*1$.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/24/2019}}
+
+  $S \rightarrow 0T1$
+
+  $T \rightarrow \epsilon | G | TG$
+  
+  $G \rightarrow 00|11$
+
+  \bigskip
+
+  \item \textbf{[10 points]} Let $\Sigma = (\sB,\sC,\sF,\sP,\tau)$ be
+    a signature of MSFOL where:
+
+  \begin{itemize}
+
+    \item[] $\sB = \set{\alpha,\beta}$.
+
+    \item[] $\sC = \set{a,b}$ with $\tau(a) = \alpha$ and $\tau(b) = \beta$.
+
+    \item[] $\sF = \set{f}$ with $\tau(f) = \alpha \times \beta
+      \rightarrow \alpha$.
+
+    \item[] $\sP = \set{p}$ with $\tau(p) = \alpha \rightarrow \mathbb{B}$.
+
+  \end{itemize}
+
+  Write a context-free grammar in BNF form that generates the set of
+  $\Sigma$-formulas.  Assume $\sV = \set{x,y,z}$.
+
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 22/03/2019}}
+
+  $<term> ::= <term-\alpha>|<term-\beta>$
+
+  $<term-\alpha> ::= <const-\alpha>:\alpha|<func>|<var>:\alpha$
+
+  $<term-\beta> ::= <const-\beta>:\beta|<var>:\beta$
+
+  $<func> ::= f(<term-\alpha>,<term-\beta>)$
+
+  $<const-\alpha> ::= a$
+ 
+  $<const-\beta> ::= b$
+
+  $<var> ::= x|y|z$
+
+  $<formula> ::= <equality>|<predicate>|<negation>|<implication>|<universal quantification>$ 
+
+  $<equality> ::= <term> = <term>$
+
+  $<predicate> ::= p(<term-\alpha>)$
+
+  $<negation> ::= \lnot<formula>$
+
+  $<implication> ::= <formula> \implies <formula>$
+
+  $<universal quantification> ::= <UQ-\alpha>|<UQ-\beta>$
+
+  $<UQ-\alpha> ::= \forall c : \alpha . <formula>$
+
+  $<UQ-\beta> ::= \forall c : \beta . <formula>$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\ee
+
+\end{document}
+
+

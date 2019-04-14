@@ -1,0 +1,186 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{hhline}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
+
+\oddsidemargin -10mm
+\evensidemargin -10mm
+\textwidth 160mm
+\textheight 200mm
+\renewcommand\baselinestretch{1.0}
+
+\pagestyle {plain}
+\pagenumbering{arabic}
+
+\newcounter{stepnum}
+
+%% Comments
+
+\usepackage{color}
+
+\newif\ifcomments\commentstrue
+
+\ifcomments
+\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\else
+\newcommand{\authornote}[3]{}
+\newcommand{\todo}[1]{}
+\fi
+
+\newcommand{\wss}[1]{\authornote{blue}{SS}{#1}}
+
+\title{Assignment 4, Part 1, Specification}
+\author{SFWR ENG 2ME4}
+
+\begin {document}
+
+\maketitle
+This Module Interface Specification (MIS) document contains modules, types and
+methods for implementing the state of a game of Life.
+
+\newpage
+
+\section* {GameBoard Module}
+
+\subsection*{Module}
+
+GameBoard
+
+\subsection* {Uses}
+
+N/A
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Constants}
+
+N/A
+
+\subsubsection* {Exported Types}
+
+GameBoard
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new GameBoard & File & & badbit, failbit, invalid\_argument\\
+\hline
+get &  & Seq of Seq of bool & \\
+\hline
+size\_c & & $\mathbb{N}$ & \\
+\hline
+size\_r & & $\mathbb{N}$ & \\
+\hline
+update& &  & \\
+\hline
+\end{tabular}
+
+\subsection* {Semantics}
+
+\subsubsection* {State Variables}
+
+raw: seq of bool
+board: seq of raw
+
+\subsubsection* {State Invariant}
+
+None
+
+\subsubsection* {Assumptions \& Design Decisions}
+
+\begin{itemize}
+\item The GameBoard constructor is called before any
+  other access routine is called for that object.  The constructor can only be
+  called once. The constructor reads configuration from file. File should have format
+
+***\#\#**
+
+*******
+
+\#\#*****
+
+Where \# - cell with life, * - without each raw should have the same amount of cells
+\end{itemize}
+
+\subsubsection* {Access Routine Semantics}
+
+new GameBoard($f$):
+\begin{itemize}
+\item transition: $board := while (line != EOF), raw.clear() (\forall i \in line.size(): line[i] == \# ? raw.add(true):raw.add(false)), board.add(raw)$
+\item output: none
+\item exception: $exc := (file.open(f) exeptions) || (line[i] != \# || line[i] != * || \exists i, j \in board.size(): board[i].size() != board[j].size()) \implies invalid\_argument$
+\end{itemize}
+
+\noindent get():
+\begin{itemize}
+\item output: $out := board$
+\item exception: none
+\end{itemize}
+
+\noindent size\_c():
+\begin{itemize}
+\item output:  $out := board.size()$
+
+\end{itemize}
+
+\noindent size\_r():
+\begin{itemize}
+\item output: $out := board[0].size()$
+
+\end{itemize}
+
+\noindent update():
+\begin{itemize}
+\item transition: $board := updated\_buffer()$
+\end{itemize}
+
+\subsection*{Local Variables}
+
+\noindent $\text{temp\_board} : \text{seq of seq of bool}$
+
+\subsection*{Local Functions}
+
+\noindent $\text{updated\_buffer} : \text{void} \rightarrow \text{seq of seq of bool}$\\
+\noindent $\text{updated\_buffer()} \equiv \forall i \in board.size() : \forall j \in board[i].size() : temp\_board = update\_sell(i ,j)$
+
+\noindent $\text{update\_sell} : \mathbb{N} \times \mathbb{N} \rightarrow \text{bool}$\\
+\noindent $\text{updated\_sell(i, j)} \equiv $
+
+\begin{tabular}{|p{4cm}|p{7cm}|l|}
+\hhline{|-|-|-|}
+   board[i][j] == true & neighbors\_number(i,j) $<$ 2 & false\\
+\hhline{|~|-|-|}
+ & neighbors\_number(i,j) $>$ 3 & false\\
+\hhline{|~|-|-|}
+ & neighbors\_number(i,j) $>$ 1 and neighbors\_number(i,j) $<$ 4 & false\\
+\hhline{|-|-|-|}
+  $board[i][j] == false$ & neighbors\_number(i,j) $==$ 3 & true\\
+\hhline{|~|-|-|}
+ & neighbors\_number(i,j) $!=$ 3 & false\\
+\hhline{|-|-|-|}
+\end{tabular}\\
+\begin{itemize}
+\item exception: i $<$ 0 $\|$ i $>$ board.size() $\|$ j $<$ 0 $\|$ j $>$ board[i].size() $\rightarrow$ out\_of\_range
+\end{itemize}
+
+\noindent $\text{neighbors\_number} : \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
+\noindent $\text{neighbors\_number(i, j)} \equiv (+\forall c \in i \pm 1 : \forall d \in j \pm 1: (c != i \&\& d != j \&\& c < board.size() \&\& c > 0 \&\& d < board[c].size() \&\& d > 0): if(board[c][d]): 1  $)
+\begin{itemize}
+\item exception: i $<$ 0 $\|$ i $>$ board.size() $\|$ j $<$ 0 $\|$ j $>$ board[i].size() $\rightarrow$ out\_of\_range
+\end{itemize}
+
+\newpage
+
+
+\end {document}

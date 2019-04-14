@@ -1,0 +1,281 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{amsthm}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage{diagbox}
+\usepackage{stackrel}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+\newcommand{\der}[2]{\stackrel[#2]{#1}{\longrightarrow}}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 9}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: March 22, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 9 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~9 as two files,
+\texttt{Assignment\_9\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_9\_\emph{YourMacID}.pdf}, to the Assignment~9
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_9\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_9.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_9\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_9\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, March 31, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_9\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_9\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on March 31.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Let $G = (N,\Sigma,P,S)$ be the CFG
+    where $N = \set{S}$, $\Sigma = \set{a,b}$, and $P$ contains the
+    following productions:
+
+  \begin{itemize}
+
+    \item[] $S \rightarrow aSb \mid \epsilon$.
+
+  \end{itemize}
+
+  For $x \in \Sigma^*$, let $P(x)$ be the property that $S \der{*}{G}
+  x$ iff $x = a^nb^n$ for some $n \ge 0$.  Prove $\ForallApp x \in
+  \Sigma^* \mdot P(x)$ by weak induction on the length of the
+  derivation $S \der{*}{G} x$ for the ($\Rightarrow$) direction and by
+  strong induction on the length of $x$ for the ($\Leftarrow$) direction.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/31/2019}}
+
+\begin{proof}
+  	
+	$S \der{n}{G} x \Rightarrow x = a^nb^n$ for all $n \in \mathbb{N}$ by weak induction.\\
+
+  	\medskip
+  	
+  	\emph{Base case}: $n = 0$.
+
+	$S \der{0}{G}  \epsilon \Rightarrow x = \epsilon$
+
+	\medskip
+
+	\emph{Induction step}: $n \ge 0$. Assume $P(n)$. We must show $P(n + 1)$.
+
+
+	$S \der{n+1}{G} x_{n+1} \Leftarrow S \der{1}{G} aSb \land aSb \der{n}{G} x_{n+1}$ (definition)
+
+	$= S \der{1}{G} aSb \land aSb \der{n}{G} ax_{n}b$ (Induction hypothesis)
+
+	$= S \der{1}{G} aSb \land aSb \der{n}{G} aa^nb^nb$ (Induction hypothesis)
+
+	$= S \der{1}{G} aSb \land aSb \der{n}{G} a^{n+1}b^{n+1}$ (Arithmetic)
+
+	$= S \der{n+1}{G}  a^{n+1}b^{n+1}$  (definition)
+
+\end{proof}
+
+\begin{proof}
+
+	$S \der{*}{G} x \Leftarrow x = a^nb^n$ for all $n \in \mathbb{N}$ by strong induction.\\
+  
+	\medskip
+
+	\emph{Base case}: $n = 0$.
+
+	x = $a^0b^0$ = $\epsilon$ = $S \der{0}{G}  \epsilon$
+
+	\emph{Induction step}: $n \ge 0$. Assume $\forall i \in  \mathbb{N}| i \le n.P(n)$. We must show $P(n + 1)$.
+
+	x = $a^{n+1}b^{n+1}$
+
+	= $aa^nb^nb$ (Arithmetic)
+
+	= $aSb$ (Induction hypothesis)
+ 
+ 	$\leftarrow$ S (Definition)
+
+
+\end{proof}
+
+
+  \item \textbf{[10 points]} Let $\Sigma = \set{a,b}$ and $L = \set{x
+    \in \Sigma^* \mid x \not= \mname{rev}(x)}$.  Construct a simple
+    grammar for $L$ as well as grammars in Chomsky and Greibach normal
+    form for $L$.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Yunbing Weng, wengy12, 03/31/2019}}
+
+  simple  grammar:
+	
+	 Let G = (N,$\set{a,b}$,P,S)
+
+  N = {S, R, T}
+
+  P = 
+
+	$S \rightarrow aSa | bSb | T$
+ 
+	$T \rightarrow aRb | bRa$
+
+	$R \rightarrow aRa | bRb | T | a | b | \epsilon$
+
+Chomsky:
+
+N = {$S, S_a, S_b, T, R, R_a, R_b, A, B, E$}
+
+P = 
+
+	$S \rightarrow AS_a|AS_b|TE$
+
+	$S_a\rightarrow SA$
+
+	$S_b \rightarrow SB$
+
+	$T \rightarrow AR_b|BR_a$
+
+	$R_a \rightarrow RA$
+
+	$R_b \rightarrow RB$
+
+	$R \rightarrow AR_a | BR_b | TE | a | b | \epsilon$
+
+	$A \rightarrow a$
+
+	$B \rightarrow b$
+
+	$E \rightarrow \epsilon$
+
+Greibach:
+
+N = {S, T, R, A, B}
+
+P = 
+
+	$S \rightarrow aSA|aSB|aTB|bTA$
+
+	$T \rightarrow aRB|bRA$
+
+	$R \rightarrow aRA|bRB|bRA|aRB|a|b|\epsilon$
+
+	$A \rightarrow a$
+
+	$B \rightarrow b$
+  
+
+\ee
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
