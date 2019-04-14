@@ -1,0 +1,246 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\LeftRightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2019}}\\[8mm]
+  {\huge \textbf{Assignment 4}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: February 12, 2019}
+
+\end{center}
+
+\medskip
+
+Assignment 4 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~4 as two files,
+\texttt{Assignment\_4\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_4\_\emph{YourMacID}.pdf}, to the Assignment~4
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_4\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_4.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_4\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_4\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, February 17, 2019 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_4\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_4\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on February 17.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+%\newpage
+
+\subsection*{Background}
+
+\be  
+
+  \item A \emph{lattice} is a weak partial order $(U,\le)$ such that
+    each pair of elements of $U$ has both a least upper bound and a
+    greatest lower bound.
+
+  \item A \emph{queue} is a finite sequence of elements for which
+    elements are added (``enqueued'') to the back of the sequence and
+    removed (``dequeued'') from the front of the sequence.  An
+    \emph{empty queue} is a queue with no members.  A \emph{singleton
+      queue} is a queue with a single element that is obtain by
+    enqueuing an element to an empty queue.
+
+\ee
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Let $\Sigma_{\sf lattice} =
+    (\set{U},\emptyset,\emptyset,\set{\le}, \tau)$ where $\tau(\le) =
+    U \times U \rightarrow \mathbb{B}$.  Construct in MSFOL a theory
+    $T=(\Sigma_{\sf lattice},\Gamma_{\sf lattice})$ of lattices.
+
+  \textcolor{blue}{\textbf{Yunbing Weng, Wengy12, 17/02/2019}}
+
+\begin{proof}
+
+  $\Gamma_{\sf lattice}$ is set of follow axioms:
+
+  \begin{enumerate}
+
+    \item \textbf{Reflexive: } $\forall x \in U. x \le x$
+
+    \item \textbf{Antisymmetric: } $\forall x, y \in U. x \le y \land y \le x \implies x = y$
+
+    \item \textbf{Transitive: } $\forall x, y, z \in U. (x \le y \land y \le z) \implies x \le z$
+
+    \item \textbf{Upper lower bound: } $\forall x, y \in U. (\exists z \in U. ((z \le x \land z \le y) 
+                                         \land \forall a \in U : (a \le x \land a \le y). a \le z))$ 
+
+    \item \textbf{Lower upper bound: } $\forall x, y \in U. (\exists z \in U. ((x \le z \land y \le z)
+                                         \land \forall a \in U : (x \le a \land y \le a). z \le a))$
+
+  \end{enumerate}
+
+\end{proof}
+
+  \item \textbf{[10 points]} Let $\Sigma_{\sf queue} = (\sB, \sC, \sF, \sP, \tau)$, where:
+
+  \be
+
+    \item $\sB = \set{\mname{Element},\mname{Queue}}$.
+
+    \item $\sC = \set{\mname{error}, \mname{empty}}$.
+
+    \item $\sF = \set{\mname{front}, \mname{back}, \mname{enqueue},
+      \mname{dequeue}}$.
+
+    \item $\sP = \emptyset$.
+
+
+    \item $\tau(\mname{error}) = \mname{Element}$.
+
+    \item $\tau(\mname{empty}) = \mname{Queue}$.
+
+    \item $\tau(\mname{front}) = \mname{Queue} \rightarrow \mname{Element}$.
+
+    \item $\tau(\mname{back}) = \mname{Queue} \rightarrow \mname{Element}$.
+
+    \item $\tau(\mname{enqueue}) = \mname{Element} \times
+      \mname{Queue} \rightarrow \mname{Queue}$.
+
+    \item $\tau(\mname{dequeue}) = \mname{Queue} \rightarrow
+      \mname{Queue}$.
+
+  \ee
+
+  Construct in MSFOL a theory $T=(\Sigma_{\sf queue},\Gamma_{\sf
+    queue})$ of queues. $\Gamma_{\sf queue}$ should contain axioms
+  that say:
+
+  \be
+
+    \item The front of an empty queue is the error element.
+
+    \item The front of a singleton queue is the single element in the queue.
+
+    \item Let $q$ be a queue obtain by enqueuing $e$ to a nonempty
+      queue $q'$.  The front of $q$ is the front of $q'$.
+
+    \item The back of an empty queue is the error element.
+
+    \item Let $q$ be a queue obtain by enqueuing $e$ to a queue $q'$.
+      The back of $q$ is $e$.
+
+    \item The dequeue of an empty queue is the empty queue.
+
+    \item The dequeue of a singleton queue is the empty queue.
+
+    \item Let $q$ be a queue obtain by enqueuing $e$ to a nonempty
+      queue $q'$.  The dequeue of $q$ is the enqueue of $e$ to the
+      dequeue of $q'$.
+
+  \ee    
+
+  \textcolor{blue}{\textbf{Yunbing Weng, Wengy12, 02/17/1997}}
+
+  \begin{proof}
+
+  Let $\Gamma_{\sf queue}$ be following axioms:
+
+  \be
+     
+    \item $\mname{front}(\mname{empty}) = \mname{error}$
+
+    \item $\forall q = \{x\} \in \mname{Queue}, x \in \mname{Element}. \mname{front}(q) = x$
+
+    \item $\forall q' \in \mname{Queue}: \lnot(q' = \mname{empty}), e \in \mname{Element}. (
+                   q = \mname{enqueue}(e, q') \implies \mname{front}(q) = \mname{front}(q'))$
+
+    \item $\mname{back}(\mname{empty}) = \mname{error}$
+
+    \item $\forall q' \in \mname{Queue}, e \in \mname{Element}. q = \mname{enqueue}(e, q') 
+                   \implies \mname{back}(q) = e$
+
+    \item $\mname{dequeue}(\mname{empty}) = \mname{empty}$
+
+    \item $\forall q = \{x\} \in \mname{Queue}, x \in \mname{Element}. \mname{dequeue}(q) = 
+                                                                     \mname{empty}$
+
+
+    \item $\forall q' \in \mname{Queue}: \lnot(q' = \mname{empty}), e \in \mname{Element}. (
+                   q = \mname{enqueue}(e, q') \implies \mname{dequeue}(q) =
+                   \mname{enqueue}(e, \mname{dequeue}(q')))$
+  \ee
+
+  \end{proof}
+
+\ee
+
+\end{document}
+
+

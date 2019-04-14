@@ -74,7 +74,7 @@ GameBoard
 \hline
 \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
 \hline
-new GameBoard & File & & badbit, failbit, invalid\_argument\\
+new GameBoard & string & & badbit, failbit, invalid\_argument\\
 \hline
 get &  & Seq of Seq of bool & \\
 \hline
@@ -83,6 +83,8 @@ size\_c & & $\mathbb{N}$ & \\
 size\_r & & $\mathbb{N}$ & \\
 \hline
 update& &  & \\
+\hline
+clear& &  & \\
 \hline
 \end{tabular}
 
@@ -145,6 +147,12 @@ new GameBoard($f$):
 \item transition: $board := updated\_buffer()$
 \end{itemize}
 
+\noindent update():
+\begin{itemize}
+\item transition: $board := null$
+\end{itemize}
+
+
 \subsection*{Local Variables}
 
 \noindent $\text{temp\_board} : \text{seq of seq of bool}$
@@ -181,6 +189,126 @@ new GameBoard($f$):
 \end{itemize}
 
 \newpage
+
+\section* {Gui Module}
+
+\subsection*{Module}
+
+Gui
+
+\subsection* {Uses}
+
+Gameboard
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Constants}
+
+N/A
+
+\subsubsection* {Exported Types}
+
+N/A
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+action & & & \\
+\hline
+\end{tabular}
+
+\subsection* {Semantics}
+
+\subsubsection* {State Variables}
+
+key: current input string
+board: GameBoard
+cmd: terminal
+
+\subsubsection* {State Invariant}
+
+None
+
+\subsubsection* {Assumptions \& Design Decisions}
+
+\begin{itemize}
+\item This is the main control and view Module, the main function "action" that always will
+take input from console and decide what to do depends on what user input is:
+"u" - update and refresh the showing board
+
+"o filename" - output the current state to the file
+
+"start filename" - restart the game with the initial configuration specified in file
+
+"q" - quit without saving
+
+"HELP" - print help massage
+
+Initially it'll show the welcome massage
+\end{itemize}
+
+\subsubsection* {Access Routine Semantics}
+
+action():
+\begin{itemize}
+\item transition: on first run: print\_help\_massage()
+
+if(key == "start filename"): board.clear(), board = new Gameboard(filename), cmd.clear(), print\_current\_board()
+
+else if(key == "u"): board.update(), cmd.clear(), print\_current\_board()
+
+else if(key == "o filename"): output\_to\_file(filename)
+
+else if(key == "q"): board.clear(), cmd.clear(), return
+
+else if(key == "HELP"): print\_help\_massage()
+
+else: print\_error\_massage()
+
+\end{itemize}
+
+\subsection*{Local Variables}
+
+\subsection*{Local Functions}
+
+\noindent $\text{cmd.clear} : \text{void} \rightarrow \text{void}$\\
+\noindent $\text{cmd.clear()} \equiv $ function from cstdlib: system("CLS")\\
+
+
+\noindent $\text{print\_help\_massage} : \text{void} \rightarrow \text{void}$\\
+\noindent $\text{print\_help\_massage()} \equiv $ prints welcome massage:
+
+please type what you want and press enter:
+
+"u" - update and refresh the showing board
+
+"o filename" - output the current state to the file
+
+"start filename" - restart the game with the initial configuration specified in file
+
+"q" - quit without saving
+
+"HELP" - print help massage\\
+
+
+\noindent $\text{print\_current\_board} : \text{void} \rightarrow \text{void}$\\
+\noindent $\text{print\_current\_board()} \equiv $ prints: "current board" + endl + board.get() + endl\\
+
+
+\noindent $\text{output\_to\_file} : \text{string} \rightarrow \text{void}$\\
+\noindent $\text{output\_to\_file(f)} \equiv $ file = File.open(f); fstream board.get() to it
+\begin{itemize}
+\item exception: $exc := (file.open(f) exeptions)$
+\end{itemize}
+
+\noindent $\text{print\_error\_massage} : \text{void} \rightarrow \text{void}$\\
+\noindent $\text{print\_error\_massage()} \equiv $ print: "try again, you can do it! If you have any questions, you can massage me wengyunbing@gmail.com"
+
+
+
 
 
 \end {document}
