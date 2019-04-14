@@ -20,7 +20,10 @@ private:
     /**
      * \brief our Gameboard
      */
-    vector <vector <bool> > board;
+    vector < vector <bool> > board;
+    vector < vector <bool> > updated_buffer();
+    bool update_cell(int i, int j);
+    int neighbors_number(int i, int j);
 public:
     /**
      * \brief Gameboard constructor
