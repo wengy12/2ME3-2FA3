@@ -8,6 +8,8 @@
 #define A4_GAME_BOARD_H_
 
 #include <vector>
+#include <fstream>
+#include <stdexept>
 
 /**
  * \brief Gameboard headler
