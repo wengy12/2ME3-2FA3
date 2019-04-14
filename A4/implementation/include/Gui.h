@@ -8,6 +8,9 @@
 #define A4_GUI_H_
 
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
 
 #include "GameBoard.h"
 
@@ -27,6 +30,7 @@ public:
     /**
      * \brief just run it and enjoy :)
      */
+     gui ();
     void action();
 };
 

@@ -9,8 +9,10 @@
 
 #include <vector>
 #include <fstream>
-#include <stdexept>
+#include <stdexcept>
+#include <iostream>
 
+using namespace std;
 /**
  * \brief Gameboard headler
  */
@@ -25,6 +27,10 @@ private:
     bool update_cell(int i, int j);
     int neighbors_number(int i, int j);
 public:
+    /**
+     * \brief void Gameboard constructor
+     */
+    Gameboard ();
     /**
      * \brief Gameboard constructor
      * \param f file name
