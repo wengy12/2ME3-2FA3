@@ -27,17 +27,18 @@ Stack <T> Stack <T>::push(T x){
 template <class T>
 Stack <T> Stack <T>::pop(){
     if (this -> S.size() == 0){
-        throw "out_of_range";
+        throw out_of_range("pop");
     }
     Stack <T>* re = new Stack <T> (this -> S);
     re -> S.pop_back();
+    //this -> S.pop_back();
     return re[0];
 }
 
 template <class T>
 T Stack <T>::top(){
     if (this -> S.size() == 0){
-        throw "out_of_range";
+        throw out_of_range("top1");
     }
     return this -> S[this -> S.size()-1];
 }

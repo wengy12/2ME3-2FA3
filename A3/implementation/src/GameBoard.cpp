@@ -1,5 +1,6 @@
 #include "GameBoard.h"
 #include <vector>
+#include <iostream>
 
 
 using namespace std;
@@ -10,14 +11,16 @@ using namespace std;
 #define forn for (int i = 0; i < n; i++)
 #define for10 for (int i = 0; i < 10; i++)
 #define for8 for (int i = 0; i < 8; i++)
-#define fors for (int i = Heart; i < Spade; i++)
-#define forr for (int j = ACE; j <= KING; j++)
+#define fors for (int i = Heart; i <= Spade; i++)
+#define forr for (RankT j = ACE; j <= KING; j++)
 
 bool B::two_decks(vector <CS> t, vector <CS> f, CS d, CS w){
     fors{
         forr{
-            if (cnt_cards(t,f,w,d,
-                [=](CardT c) {return c.r == i && c.s == j;}) != 2){
+            int r = cnt_cards(t,f,w,d,
+                [=](CardT c) {return c.r == j && c.s == i;});
+            if (r != 2){
+                //cerr << r << " " << i << " " << j << endl;
                 return false;
             }
         }
@@ -37,6 +40,7 @@ int B::cnt_cards_stack(CS s, function<bool(CardT)> foo){
     vector <CardT> v = s.toSeq();
     int res = 0;
     for (int i = 0; i < v.size(); i++){
+        //cerr << foo(v[i]) << " " << v[i].s << " " <<  v[i].r << endl;
         if (foo(v[i])){
             res++;
         }
@@ -96,13 +100,16 @@ bool B::valid_tab_foundation(int x, int y){
     if (T[x].size() == 0){
         return false;
     }
-    if (T[y].size() == 0){
+    if (F[y].size() == 0){
         return T[x].top().r == ACE;
     }
     return foundation_placeable(T[x].top(), F[y].top());
 }
 
 bool B::valid_waste_tab(int x){
+    if (W.size() == 0){
+        return false;
+    }
     if (T[x].size() == 0){
         return true;
     }
@@ -110,8 +117,11 @@ bool B::valid_waste_tab(int x){
 }
 
 bool B::valid_waste_foundation(int x){
+    if (W.size() == 0){
+        return false;
+    }
     if (F[x].size() == 0){
-        return true;
+        return W.top().r == ACE;
     }
     return foundation_placeable(W.top(), F[x].top());
 }
@@ -126,7 +136,8 @@ bool B::foundation_placeable(CardT c, CardT d){
 
 B::B(vector <CardT> v){
     if (!two_decks(init_seq(10),init_seq(8),CS(v),CS())){
-        throw "invalid_argument";
+        //cerr << v.size() << endl;
+        throw invalid_argument("boardT init");
     }
     T = tab_deck(vector <CardT> (v.begin(), v.begin() + 40));
     F = init_seq(8);
@@ -137,13 +148,13 @@ B::B(vector <CardT> v){
 bool B::is_valid_tab_mv(C c, int x, int y){
     if (c == Tableau){
         if (!(is_valid_pos(c,x) && (is_valid_pos(c,y) ) ) ){
-            throw "out_of_range";
+            throw out_of_range("is_valid_tab_mv to tab");
         }
         return valid_tab_tab(x, y);
     }
     if (c == Foundation){
         if (!(is_valid_pos(Tableau,x) && (is_valid_pos(c,y) ) ) ){
-            throw "out_of_range";
+            throw out_of_range("is_valid_tab_mv found");
         }
         return valid_tab_foundation(x, y);
     }
@@ -152,10 +163,10 @@ bool B::is_valid_tab_mv(C c, int x, int y){
 
 bool B::is_valid_waste_mv(C c, int x){
     if (W.size() == 0){
-        throw "invalid_argument";
+        throw invalid_argument("is_valid_waste_mv");
     }
     if (!(is_valid_pos(c,x))){
-        throw "out_of_range";
+        throw out_of_range("is_valid_waste_mv");
     }
     if (c == Tableau){
         return valid_waste_tab(x);
@@ -172,50 +183,50 @@ bool B::is_valid_deck_mv(){
 
 void B::tab_mv(C c, int x, int y){
     if (!is_valid_tab_mv(c,x,y)){
-        throw "invalid_argument";
+        throw invalid_argument("tab_mv");
     }
     if (c == Tableau){
-        T[y].push(T[x].top());
-        T[x].pop();
+        T[y] = T[y].push(T[x].top());
+        T[x] = T[x].pop();
     }
     if (c == Foundation){
-        F[y].push(T[x].top());
-        T[x].pop();
+        F[y] = F[y].push(T[x].top());
+        T[x] = T[x].pop();
     }
 }
 
 void B::waste_mv(C c, int x){
     if (!is_valid_waste_mv(c, x)){
-        throw "invalid_argument";
+        throw invalid_argument("waste_mv");
     }
     if (c == Tableau){
-        T[x].push(W.top());
-        W.pop();
+        T[x] = T[x].push(W.top());
+        W = W.pop();
     }
     if (c == Foundation){
-        F[x].push(W.top());
-        W.pop();
+        F[x] = F[x].push(W.top());
+        W = W.pop();
     }
 }
 
 void B::deck_mv(){
     if (!is_valid_deck_mv()){
-        throw "invalid_argument";
+        throw invalid_argument("deck_mv");
     }
-    W.push(D.top());
-    D.pop();
+    W = W.push(D.top());
+    D = D.pop();
 }
 
 CS B::get_tab(int n){
     if (!(is_valid_pos(Tableau, n))){
-        throw "out_of_range";
+        throw out_of_range("get_tab");
     }
     return T[n];
 }
 
 CS B::get_foundation(int n){
     if (!(is_valid_pos(Foundation, n))){
-        throw "out_of_range";
+        throw out_of_range("get_foundation");
     }
     return F[n];
 }
@@ -242,14 +253,17 @@ bool B::valid_mv_exists(){
         }
     }
     for10{
-        if (is_valid_waste_mv(Tableau, i)){
+        if (W.size() != 0 && is_valid_waste_mv(Tableau, i)){
             return true;
         }
     }
     for8{
-        if (is_valid_waste_mv(Foundation, i)){
+        if (W.size() != 0 && is_valid_waste_mv(Foundation, i)){
             return true;
         }
+    }
+    if (is_valid_deck_mv()){
+        return true;
     }
     return false;
 }
