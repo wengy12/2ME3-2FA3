@@ -76,7 +76,7 @@ GameBoard
 \hline
 new GameBoard & string & & badbit, failbit, invalid\_argument\\
 \hline
-get &  & Seq of Seq of bool & \\
+get &  & string & \\
 \hline
 size\_c & & $\mathbb{N}$ & \\
 \hline
@@ -126,7 +126,7 @@ new GameBoard($f$):
 
 \noindent get():
 \begin{itemize}
-\item output: $out := board$
+\item output: $out := board converted to printable string$
 \item exception: none
 \end{itemize}
 
@@ -147,7 +147,7 @@ new GameBoard($f$):
 \item transition: $board := updated\_buffer()$
 \end{itemize}
 
-\noindent update():
+\noindent clear():
 \begin{itemize}
 \item transition: $board := null$
 \end{itemize}
